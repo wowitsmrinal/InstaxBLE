@@ -501,7 +501,7 @@ class InstaxBLE:
         """ Wait for one minute. Hacky way of preventing disconnecting too soon """
         if not self.quiet:
             self.log("Waiting for one minute...")
-        sleep(60)
+        sleep(70)
 
 
 def main(args={}):
