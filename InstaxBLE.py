@@ -468,7 +468,7 @@ class InstaxBLE:
         if abs(current_ratio - target_ratio) < 0.01:
             # Image already has the target ratio (with small tolerance)
             return img
-            
+
         if current_ratio > target_ratio:
             # Image is too wide, crop width
             new_width = int(height * target_ratio)
