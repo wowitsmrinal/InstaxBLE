@@ -451,6 +451,35 @@ class InstaxBLE:
 
         self.get_printer_status()
 
+    def crop_image_to_ratio(self, img: Image.Image, target_ratio: float = 3/4) -> Image.Image:
+        """
+        Crop an image to the specified aspect ratio (default 3:4), keeping only the center.
+        
+        Args:
+            img: PIL Image object to crop
+            target_ratio: Target aspect ratio as width/height (default 3:4 = 0.75)
+            
+        Returns:
+            Cropped PIL Image object
+        """
+        width, height = img.size
+        current_ratio = width / height
+        
+        if abs(current_ratio - target_ratio) < 0.01:
+            # Image already has the target ratio (with small tolerance)
+            return img
+            
+        if current_ratio > target_ratio:
+            # Image is too wide, crop width
+            new_width = int(height * target_ratio)
+            left = (width - new_width) // 2
+            return img.crop((left, 0, left + new_width, height))
+        else:
+            # Image is too tall, crop height
+            new_height = int(width / target_ratio)
+            top = (height - new_height) // 2
+            return img.crop((0, top, width, top + new_height))
+
     def pil_image_to_bytes(self, img: Image.Image, max_size_kb: int = None) -> bytearray:
         """ Convert a PIL image to a bytearray """
         img_buffer = BytesIO()
@@ -458,6 +487,9 @@ class InstaxBLE:
         # Convert the image to RGB mode if it's in RGBA mode
         if img.mode == 'RGBA':
             img = img.convert('RGB')
+        
+        # Crop the image to 3:4 ratio if needed
+        img = self.crop_image_to_ratio(img, 3/4)
 
         # Resize the image to <imageSize> pixels
         img = img.resize(self.imageSize, Image.Resampling.LANCZOS)
