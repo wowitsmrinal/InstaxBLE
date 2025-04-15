@@ -22,12 +22,6 @@ import sys
 from PIL import Image
 from io import BytesIO
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-
 class InstaxBLE:
     def __init__(
         self,
