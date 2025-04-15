@@ -3,6 +3,7 @@
 from math import ceil
 from struct import pack, unpack_from
 from time import sleep
+import logging
 
 # Try to import Types with a relative import first
 try:
@@ -77,20 +78,20 @@ class InstaxBLE:
     def log(self, msg):
         """ Print a debug message"""
         if self.verbose:
-            print(msg)
+            logging.info(msg)
 
     def display_current_status(self):
         """ Display an overview of the current printer state """
-        print("\nPrinter details: ")
-        # print(f"Device name:         {self.printerSettings['modelName']}")
-        print(f"Model:               {self.printerSettings['modelName']}")
-        print(f"Photos left:         {self.photosLeft}/10")
-        print(f"Battery level:       {self.batteryPercentage}%")
-        print(f"Charging:            {self.isCharging}")
-        print(f"Required image size: {self.printerSettings['width']}x{self.printerSettings['height']}px")
+        logging.info("\nPrinter details: ")
+        logging.info(f"Device name:         {self.printerSettings['modelName']}")
+        logging.info(f"Model:               {self.printerSettings['modelName']}")
+        logging.info(f"Photos left:         {self.photosLeft}/10")
+        logging.info(f"Battery level:       {self.batteryPercentage}%")
+        logging.info(f"Charging:            {self.isCharging}")
+        logging.info(f"Required image size: {self.printerSettings['width']}x{self.printerSettings['height']}px")
         if self.peripheral.mtu:
-            print(f"MTU:                 {self.peripheral.mtu()}")
-        print("")
+            logging.info(f"MTU:                 {self.peripheral.mtu()}")
+        logging.info("")
 
     def parse_printer_response(self, event, packet):
         """ Parse the response packet and print the result """
@@ -500,7 +501,7 @@ class InstaxBLE:
     def wait_one_minute(self):
         """ Wait for one minute. Hacky way of preventing disconnecting too soon """
         if not self.quiet:
-            print("Waiting for one minute...")
+            self.log("Waiting for one minute...")
         sleep(60)
 
 
