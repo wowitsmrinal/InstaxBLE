@@ -497,11 +497,11 @@ class InstaxBLE:
 
         return bytearray(img_buffer.getvalue())
 
-    def wait_two_minutes(self):
-        """ Wait for two minutes. Hacky way of preventing disconnecting too soon """
+    def wait_one_minute(self):
+        """ Wait for one minute. Hacky way of preventing disconnecting too soon """
         if not self.quiet:
-            self.log("Waiting for two minutes...")
-        sleep(120)
+            self.log("Waiting for one minute...")
+        sleep(60)
 
 
 def main(args={}):
@@ -531,7 +531,7 @@ def main(args={}):
             instax.print_image(instax.image_path)
         else:
             instax.print_image(instax.printerSettings['exampleImage'])
-        instax.wait_two_minutes()
+        instax.wait_one_minute()
 
     except Exception as e:
         print(type(e).__name__, __file__, e.__traceback__.tb_lineno)
