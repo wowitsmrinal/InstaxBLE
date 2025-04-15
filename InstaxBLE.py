@@ -373,11 +373,11 @@ class InstaxBLE:
         imgData = imgSrc
         if isinstance(imgSrc, str):  # if it's a path, load the image contents
             image = Image.open(imgSrc)
-            imgData = self.pil_image_to_bytes(image, max_size_kb=105)
+            imgData = self.pil_image_to_bytes(image, max_size_kb=100)
         elif isinstance(imgSrc, BytesIO):
             imgSrc.seek(0)  # Go to the start of the BytesIO object
             image = Image.open(imgSrc)
-            imgData = self.pil_image_to_bytes(image, max_size_kb=105)
+            imgData = self.pil_image_to_bytes(image, max_size_kb=100)
 
         # self.log(f"len of imagedata: {len(imgData)}")
         self.packetsForPrinting = [
